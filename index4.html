@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Un Vol Mystérieux</title>
 
 <style>
@@ -9,9 +10,7 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: Georgia, serif;
-  background:
-    radial-gradient(circle at center, rgba(90,60,30,0.8), rgba(10,10,10,0.95)),
-    linear-gradient(135deg, #1b120b, #2c1a0d);
+  background: radial-gradient(circle, #3b2a1a, #080604);
   color: #f7e7c6;
   display: flex;
   justify-content: center;
@@ -22,10 +21,10 @@ body {
   width: 430px;
   padding: 35px;
   text-align: center;
-  background: rgba(25, 18, 12, 0.92);
+  background: rgba(25, 18, 12, 0.94);
   border: 3px solid #b8860b;
   border-radius: 22px;
-  box-shadow: 0 0 35px #000, inset 0 0 20px rgba(255,180,60,0.15);
+  box-shadow: 0 0 35px #000;
 }
 
 h1 {
@@ -43,13 +42,12 @@ h1 {
 
 #timer {
   font-size: 70px;
-  margin: 20px 0;
   color: #ffcc55;
   text-shadow: 0 0 12px #ff9900;
 }
 
 input {
-  width: 160px;
+  width: 170px;
   padding: 12px;
   font-size: 28px;
   text-align: center;
@@ -57,7 +55,6 @@ input {
   border: 2px solid #b8860b;
   background: #f4dfb2;
   color: #2b1a0d;
-  outline: none;
 }
 
 button {
@@ -74,11 +71,6 @@ button {
 
 button:hover {
   transform: translateY(-2px);
-}
-
-button:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 #4a2b08;
 }
 
 .penalite {
@@ -103,7 +95,6 @@ button:active {
 <body>
 
 <div class="app">
-
   <h1>UN VOL MYSTÉRIEUX</h1>
   <div class="subtitle">Entrez le bon code pour avancer</div>
 
@@ -120,7 +111,6 @@ button:active {
   <p id="message"></p>
 
   <div class="footer">Chronomètre officiel de l'enquête</div>
-
 </div>
 
 <script>
@@ -129,6 +119,7 @@ let temps = 90 * 60;
 const codes = {
   "1234":"images/carte1.jpg",
   "5678":"images/carte2.jpg",
+
   "2":"sons/2.mp3",
   "37":"sons/37.mp3",
   "67":"sons/67.mp3",
@@ -136,6 +127,7 @@ const codes = {
   "77":"sons/77.mp3",
   "98":"sons/98.mp3",
   "99":"sons/99.mp3",
+
   "F":"sons/F.mp3",
   "J":"sons/J.mp3",
   "M":"sons/M.mp3",
@@ -183,10 +175,18 @@ function verifier() {
     document.getElementById("message").textContent = "Code validé !";
     window.open(codes[code], "_blank");
   } else {
-    document.getElementById("message").textContent = "Code incorrect.";
     penalite();
+    document.getElementById("message").textContent = "Code incorrect. Pénalité : -1 minute.";
   }
+
+  document.getElementById("code").value = "";
 }
+
+document.getElementById("code").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    verifier();
+  }
+});
 
 afficherTemps();
 setInterval(compteARebours, 1000);
