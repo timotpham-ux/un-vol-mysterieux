@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Un Vol Mystérieux</title>
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Georgia, serif;
+  background:
+    radial-gradient(circle at center, rgba(90,60,30,0.8), rgba(10,10,10,0.95)),
+    linear-gradient(135deg, #1b120b, #2c1a0d);
+  color: #f7e7c6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app {
+  width: 430px;
+  padding: 35px;
+  text-align: center;
+  background: rgba(25, 18, 12, 0.92);
+  border: 3px solid #b8860b;
+  border-radius: 22px;
+  box-shadow: 0 0 35px #000, inset 0 0 20px rgba(255,180,60,0.15);
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 34px;
+  color: #ffd36a;
+  letter-spacing: 2px;
+}
+
+.subtitle {
+  font-style: italic;
+  color: #d6b77a;
+  margin-bottom: 25px;
+}
+
+#timer {
+  font-size: 70px;
+  margin: 20px 0;
+  color: #ffcc55;
+  text-shadow: 0 0 12px #ff9900;
+}
+
+input {
+  width: 160px;
+  padding: 12px;
+  font-size: 28px;
+  text-align: center;
+  border-radius: 12px;
+  border: 2px solid #b8860b;
+  background: #f4dfb2;
+  color: #2b1a0d;
+  outline: none;
+}
+
+button {
+  padding: 12px 20px;
+  margin: 8px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(#d9a441, #8b5a15);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #4a2b08;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #4a2b08;
+}
+
+.penalite {
+  background: linear-gradient(#b84032, #611111);
+  box-shadow: 0 4px 0 #310606;
+}
+
+#message {
+  min-height: 28px;
+  color: #ff7777;
+  font-weight: bold;
+}
+
+.footer {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #9f8558;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <h1>UN VOL MYSTÉRIEUX</h1>
+  <div class="subtitle">Entrez le bon code pour avancer</div>
+
+  <h2 id="timer">90:00</h2>
+
+  <button class="penalite" onclick="penalite()">Pénalité -1 min</button>
+
+  <br><br>
+
+  <input id="code" placeholder="Code">
+  <br>
+  <button onclick="verifier()">Valider</button>
+
+  <p id="message"></p>
+
+  <div class="footer">Chronomètre officiel de l'enquête</div>
+
+</div>
+
+<script>
+let temps = 90 * 60;
+
+const codes = {
+  "1234":"images/carte1.jpg",
+  "5678":"images/carte2.jpg",
+  "2":"sons/2.mp3",
+  "37":"sons/37.mp3",
+  "67":"sons/67.mp3",
+  "73":"sons/73.mp3",
+  "77":"sons/77.mp3",
+  "98":"sons/98.mp3",
+  "99":"sons/99.mp3",
+  "F":"sons/F.mp3",
+  "J":"sons/J.mp3",
+  "M":"sons/M.mp3",
+  "N":"sons/N.mp3",
+  "P":"sons/P.mp3",
+
+  "C":"https://lockee.fr/o/DlkaEB5V",
+  "72":"https://lockee.fr/o/6UMWsHSC",
+  "O":"https://lockee.fr/o/axQQqavy",
+  "38":"https://lockee.fr/o/OUjsN773",
+
+  "8":"videos/8.webm"
+};
+
+function afficherTemps() {
+  let minutes = Math.floor(temps / 60);
+  let secondes = temps % 60;
+
+  document.getElementById("timer").textContent =
+    String(minutes).padStart(2, "0") + ":" +
+    String(secondes).padStart(2, "0");
+}
+
+function compteARebours() {
+  if (temps > 0) {
+    temps--;
+    afficherTemps();
+  } else {
+    document.getElementById("timer").textContent = "00:00";
+    document.getElementById("message").textContent = "Temps écoulé !";
+  }
+}
+
+function penalite() {
+  temps -= 60;
+  if (temps < 0) temps = 0;
+  afficherTemps();
+  document.getElementById("message").textContent = "Pénalité appliquée : -1 minute.";
+}
+
+function verifier() {
+  let code = document.getElementById("code").value.trim().toUpperCase();
+
+  if (codes[code]) {
+    document.getElementById("message").textContent = "Code validé !";
+    window.open(codes[code], "_blank");
+  } else {
+    document.getElementById("message").textContent = "Code incorrect.";
+    penalite();
+  }
+}
+
+afficherTemps();
+setInterval(compteARebours, 1000);
+</script>
+
+</body>
+</html>
