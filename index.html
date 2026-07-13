@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#15100c">
+  <title>Un Vol Mystérieux</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="background-overlay"></div>
+
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">ESCAPE GAME</p>
+        <h1>UN VOL MYSTÉRIEUX</h1>
+      </div>
+
+      <button
+        id="audioToggle"
+        class="icon-button"
+        type="button"
+        aria-label="Activer ou couper l'ambiance sonore"
+        title="Activer l'ambiance sonore"
+      >
+        <span id="audioIcon">🔊</span>
+      </button>
+    </header>
+
+    <section class="start-card">
+      <div>
+        <p class="label">AVENTURE</p>
+        <p id="gameStatus" class="game-status">Prêt à commencer</p>
+      </div>
+      <button id="startPauseButton" class="start-pause-button paused" type="button">▶ START</button>
+    </section>
+
+    <section class="timer-card">
+      <div>
+        <p class="label">TEMPS RESTANT</p>
+        <div id="timer" aria-live="polite">90:00</div>
+      </div>
+
+      <button
+        id="penaltyButton"
+        class="penalty-button"
+        type="button"
+        aria-label="Appliquer une pénalité d'une minute"
+        title="Pénalité : -1 minute"
+      >
+        <img src="images/penalite.png" alt="">
+      </button>
+    </section>
+
+    <section class="code-card">
+      <label class="label" for="codeInput">ENTREZ UN CODE</label>
+
+      <input
+        id="codeInput"
+        class="code-input"
+        type="text"
+        autocomplete="off"
+        autocapitalize="characters"
+        spellcheck="false"
+        maxlength="20"
+        placeholder="Numéro ou lettre"
+      >
+
+      <div class="actions">
+        <button id="validateButton" class="primary-action" type="button">
+          VALIDER
+        </button>
+
+        <button id="hintButton" class="secondary-action" type="button">
+          💡 INDICE
+        </button>
+      </div>
+
+      <p id="message" class="message" aria-live="polite"></p>
+    </section>
+
+    <section class="sound-card">
+      <div>
+        <p class="label">AMBIANCE ACTUELLE</p>
+        <p id="currentSoundtrack" class="soundtrack-name">Aucune</p>
+      </div>
+
+      <button id="restartTrackButton" class="text-button" type="button">
+        Reprendre la piste
+      </button>
+    </section>
+
+    <footer>
+      <button id="resetButton" class="reset-button" type="button">
+        Réinitialiser la partie
+      </button>
+    </footer>
+  </main>
+
+  <div
+    id="hintModal"
+    class="modal hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="hintTitle"
+  >
+    <div class="modal-panel">
+      <button
+        id="closeHintButton"
+        class="close-button"
+        type="button"
+        aria-label="Fermer"
+      >
+        ×
+      </button>
+
+      <div class="hint-heading">
+        <span class="hint-bulb">💡</span>
+
+        <div>
+          <p class="eyebrow">AIDE</p>
+          <h2 id="hintTitle">INDICES</h2>
+          <p id="hintCardNumber">Sélectionnez une carte</p>
+        </div>
+      </div>
+
+      <div class="hint-card-selector">
+        <label for="hintCardInput">Numéro ou lettre de la carte</label>
+        <div class="hint-card-selector-row">
+          <input
+            id="hintCardInput"
+            type="text"
+            autocomplete="off"
+            autocapitalize="characters"
+            spellcheck="false"
+            maxlength="20"
+            placeholder="Ex. 72, V ou F"
+          >
+          <button id="loadHintCardButton" class="primary-action" type="button">
+            CHARGER
+          </button>
+        </div>
+        <p id="hintCardError" class="hint-card-error"></p>
+      </div>
+
+      <div id="hintProgress" class="hint-progress"></div>
+      <div id="hintSummary" class="hint-summary"></div>
+      <div id="hintText" class="hint-text hidden"></div>
+
+      <p id="hintCost" class="hint-cost">
+        Coût : <strong>2 minutes</strong>
+      </p>
+
+      <div class="modal-actions">
+        <button id="cancelHintButton" class="secondary-action" type="button">
+          ANNULER
+        </button>
+
+        <button id="revealHintButton" class="primary-action" type="button">
+          CONSULTER
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <audio id="audioA" loop preload="auto"></audio>
+  <audio id="audioB" loop preload="auto"></audio>
+
+  <script src="js/indices.js"></script>
+  <script src="js/codes.js"></script>
+  <script src="js/audio-config.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
